@@ -10,25 +10,25 @@ const env =
     ? process.env
     : {};
 
-// Dynamic helper to match any Vercel or Vite Supabase env variable name
-const findEnvValue = (regex) => {
-  for (const [key, val] of Object.entries(env)) {
-    if (typeof val === 'string' && val.trim() && regex.test(key)) {
-      return val.trim();
-    }
+const getRawEnv = (key) => {
+  try {
+    return import.meta.env[key] || '';
+  } catch {
+    return '';
   }
-  return '';
 };
 
+// Direct references ensure Vite's define plugin statically replaces these values during build!
 const supabaseUrl =
-  env.VITE_SUPABASE_URL ||
-  findEnvValue(/SUPABASE_URL$/i) ||
+  import.meta.env.VITE_SUPABASE_URL ||
+  getRawEnv('NEXT_PUBLIC_eventmanagement_SUPABASE_URL') ||
   '';
 
 const supabaseKey =
-  env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  env.VITE_SUPABASE_ANON_KEY ||
-  findEnvValue(/(PUBLISHABLE_KEY|ANON_KEY)$/i) ||
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  getRawEnv('NEXT_PUBLIC_eventmanagement_PUBLISHABLE_KEY') ||
+  getRawEnv('NEXT_PUBLIC_eventmanagement_SUPABASE_ANON_KEY') ||
   '';
 
 export const isSupabaseConfigured = () => {
