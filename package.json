@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hello-pangea/dnd": "^16.6.0",
+    "@supabase/supabase-js": "^2.118.0",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.19",
     "lenis": "^1.1.14",

@@ -99,12 +99,13 @@ export default function ParticipantsPage() {
 
   const handleBulkDelete = async () => {
     setDeleteLoading(true);
+    const count = selected.size;
     try {
       await bulkDeleteParticipants([...selected]);
       setSelected(new Set());
       await refetch();
       setBulkDeleteOpen(false);
-      toast.success(`${selected.size} participant(s) deleted`);
+      toast.success(`${count} participant(s) deleted`);
     } catch { toast.error('Bulk delete failed'); }
     finally { setDeleteLoading(false); }
   };
